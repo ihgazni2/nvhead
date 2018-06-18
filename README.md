@@ -2,7 +2,7 @@
 >__handle ...__
 
 # install
->__pip3 install edict
+>__pip3 install nvhead
 
 -----------------------------------------------------------------------
->├──0. [](edict/Images/.0.png)  <br>
+>├──0. [](nvhead/Images/.0.png)  <br>
