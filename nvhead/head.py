@@ -168,7 +168,8 @@ class Head():
         return(self._tlist.tl)
     def sarr(self):
         sarr = head_tl2sarr(self._tlist.tl)
-        return(pobj(sarr))
+        pobj(sarr)
+        return(sarr)
     def __repr__(self):
         if(self.for_req):
             pobj(self._dict)
