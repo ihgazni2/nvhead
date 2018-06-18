@@ -286,7 +286,9 @@ class Head():
                     tl = self._tlist.tl
                     head_update(self,tl)
             else:
-                print('{0} already exist in headers,please use force=True'.format(name))
+                self._tlist.append(name,value)
+                tl = self._tlist.tl
+                head_update(self,tl)
         else:
             self._tlist.append(name,value)
             tl = self._tlist.tl
@@ -308,7 +310,9 @@ class Head():
                     tl = self._tlist.tl
                     head_update(self,tl)
             else:
-                print('{0} already exist in headers,please use force=True'.format(name))
+                self._tlist.prepend(name,value)
+                tl = self._tlist.tl
+                head_update(self,tl)
         else:
             self._tlist.prepend(name,value)
             tl = self._tlist.tl
@@ -330,7 +334,9 @@ class Head():
                     tl = self._tlist.tl
                     head_update(self,tl)
             else:
-                print('{0} already exist in headers,please use force=True'.format(name))
+                self._tlist.insert(loc,name,value)
+                tl = self._tlist.tl
+                head_update(self,tl)
         else:
             self._tlist.insert(loc,name,value)
             tl = self._tlist.tl
