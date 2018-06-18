@@ -27,6 +27,19 @@
     hd.
 ![](nvhead/Images/Head.INTRODUCE.0.png)  <br>
 
+    hd.count
+    hd.for_req
+    
+    hd.accept_encoding
+    hd.x_oi_thumbprint
+    hd.user_agent
+    hd.authorization
+    hd.content_length
+    hd.content_type
+    hd.connection
+    hd.cache_control
+
+
 -----------------------------------------------------------------------
 
 _class Head_
