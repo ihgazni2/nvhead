@@ -43,8 +43,8 @@
 
 -----------------------------------------------------------------------
 
-_class Head_
------------------------------------------------------------------------
+_class Head_  
+-------------------------------------------------------------------------
 >├──0. [init with string](nvhead/Images/Head.init_with_string.0.png)  <br>
 ├──1. [init with dict\<0\>](nvhead/Images/Head.init_with_dict.0.png)  <br>
 ├──1. [init with dict\<1\>](nvhead/Images/Head.init_with_dict.1.png)  <br>
@@ -52,7 +52,7 @@ _class Head_
 ├──2. [init with tlist\<0\>](nvhead/Images/Head.init_with_tlist.0.png)  <br>
 ├──2. [init with tlist\<1\>](nvhead/Images/Head.init_with_tlist.1.png)  <br>
 ├──3. [init with res_head\<0\>](nvhead/Images/Head.init_with_res_head.0.png)  <br>
-
+-------------------------------------------------------------------------
 
 
 
