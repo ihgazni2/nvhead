@@ -150,6 +150,7 @@ class Head():
         else:
             print("type {0} header is not supported".format(type(h)))
         super(Head,self).__setattr__('for_req',for_req)
+        super(Head,self).__setattr__('for_res',not(for_req))
         if(for_req):
             #req_head : 不允许重复entry
             tl = tltl.uniqualize_all(tl,mode='key')
@@ -277,8 +278,8 @@ class Head():
         value = str(value)
         cond = self._tlist.includes(key=name)
         if(cond):
-            if(force):
-                if(self.for_req):
+            if(self.for_req):
+                if(not(force)):
                     print('{0} already exist in headers,and request head did not allow duplicate head name'.format(name))
                 else:
                     self._tlist.append(name,value)
@@ -299,8 +300,8 @@ class Head():
         value = str(value)
         cond = self._tlist.includes(key=name)
         if(cond):
-            if(force):
-                if(self.for_req):
+            if(self.for_req):
+                if(not(force)):
                     print('{0} already exist in headers,and request head did not allow duplicate head name'.format(name))
                 else:
                     self._tlist.prepend(name,value)
@@ -321,8 +322,8 @@ class Head():
         value = str(value)
         cond = self._tlist.includes(key=name)
         if(cond):
-            if(force):
-                if(self.for_req):
+            if(self.for_req):
+                if(not(force)):
                     print('{0} already exist in headers,and request head did not allow duplicate head name'.format(name))
                 else:
                     self._tlist.insert(loc,name,value)
