@@ -362,13 +362,13 @@ class Head():
         name = str(name)
         self._tlist.remove_which(which,key=name)
         tl = self._tlist.tl
-        update_after_remove(self,key)
+        update_after_remove(self,name)
         head_update(self,tl)
     def remove_all(self,name,**kwargs):
         name = str(name)
         self._tlist.remove_all(key=name)
         tl = self._tlist.tl
-        update_after_remove(self,key)
+        update_after_remove(self,name)
         head_update(self,tl)
     def uniqualize(self,name,**kwargs):
         name = str(name)
