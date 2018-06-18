@@ -120,7 +120,6 @@ def head_update(self,tl):
 def update_after_remove(self,name):
     if(self[name].__len__() == 0):
         usname = self._orig2us_ref[name]
-        del self[name]
         super(Head,self).__delattr__(usname)
     else:
         pass
@@ -234,6 +233,8 @@ class Head():
             rslt = tltl.get_value(self._tlist.tl,key)
         if(rslt.__len__() == 1):
             return(rslt[0])
+        elif(rslt.__len__() == 0):
+            raise(KeyError)
         else:
             return(rslt)
     def __setitem__(self,*args,**kwargs):
