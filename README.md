@@ -52,6 +52,11 @@ _class Head_
 ├──2. [init with tlist\<0\>](nvhead/Images/Head.init_with_tlist.0.png)  <br>
 ├──2. [init with tlist\<1\>](nvhead/Images/Head.init_with_tlist.1.png)  <br>
 ├──3. [init with res_head\<0\>](nvhead/Images/Head.init_with_res_head.0.png)  <br>
+├──4. [append\<0\>](nvhead/Images/Head.append.0.png)  <br>
+├──4. [append\<1\>](nvhead/Images/Head.append.1.png)  <br>
+├──4. [append\<2\>](nvhead/Images/Head.append.2.png)  <br>
+├──4. [append\<3\>](nvhead/Images/Head.append.3.png)  <br>
+
 -------------------------------------------------------------------------
 
 
