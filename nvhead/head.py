@@ -116,6 +116,17 @@ def head_update(self,tl):
             # self.__dict__[method] = values
             super(Head,self).__setattr__(method,values)
 
+
+def update_after_remove(self,name):
+    if(self[name].__len__() == 0):
+        usname = self._orig2us_ref[name]
+        super(Head,self).__delitem__(name)
+        super(Head,self).__delattr__(usname)
+    else:
+        pass
+
+
+
 #req_head : 不允许重复entry
 #res_head : 允许重复entry,例如set_cookie
 #for_req  : for request
@@ -207,6 +218,7 @@ class Head():
                 pass
             tl = self._tlist.tl
             head_update(self,tl)
+            update_after_remove(self,iname)
     def __getitem__(self,*args,**kwargs):
         if(isinstance(args[0],tuple)):
             #very special in __getitem__
@@ -269,6 +281,7 @@ class Head():
             tltl._pop_all(self._tlist.tl,key=key)
         tl = self._tlist.tl
         head_update(self,tl)
+        update_after_remove(self,key)
     def append(self,name,value,**kwargs):
         if('force' in kwargs):
             force = kwargs['force']
@@ -350,11 +363,13 @@ class Head():
         self._tlist.remove_which(which,key=name)
         tl = self._tlist.tl
         head_update(self,tl)
+        update_after_remove(self,name)
     def remove_all(self,name,**kwargs):
         name = str(name)
         self._tlist.remove_all(key=name)
         tl = self._tlist.tl
         head_update(self,tl)
+        update_after_remove(self,name)
     def uniqualize(self,name,**kwargs):
         name = str(name)
         self._tlist.uniqualize(name)
