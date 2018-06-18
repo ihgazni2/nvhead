@@ -120,7 +120,7 @@ def head_update(self,tl):
 def update_after_remove(self,name):
     if(self[name].__len__() == 0):
         usname = self._orig2us_ref[name]
-        super(Head,self).__delitem__(name)
+        del self[name]
         super(Head,self).__delattr__(usname)
     else:
         pass
