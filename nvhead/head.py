@@ -217,8 +217,8 @@ class Head():
             else:
                 pass
             tl = self._tlist.tl
-            head_update(self,tl)
             update_after_remove(self,iname)
+            head_update(self,tl)
     def __getitem__(self,*args,**kwargs):
         if(isinstance(args[0],tuple)):
             #very special in __getitem__
@@ -280,8 +280,8 @@ class Head():
             key = str(key)
             tltl._pop_all(self._tlist.tl,key=key)
         tl = self._tlist.tl
-        head_update(self,tl)
         update_after_remove(self,key)
+        head_update(self,tl)
     def append(self,name,value,**kwargs):
         if('force' in kwargs):
             force = kwargs['force']
@@ -362,14 +362,14 @@ class Head():
         name = str(name)
         self._tlist.remove_which(which,key=name)
         tl = self._tlist.tl
+        update_after_remove(self,key)
         head_update(self,tl)
-        update_after_remove(self,name)
     def remove_all(self,name,**kwargs):
         name = str(name)
         self._tlist.remove_all(key=name)
         tl = self._tlist.tl
+        update_after_remove(self,key)
         head_update(self,tl)
-        update_after_remove(self,name)
     def uniqualize(self,name,**kwargs):
         name = str(name)
         self._tlist.uniqualize(name)
