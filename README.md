@@ -29,6 +29,7 @@
 
     hd.count
     hd.for_req
+    hd.for_res
     
     hd.accept_encoding
     hd.x_oi_thumbprint
