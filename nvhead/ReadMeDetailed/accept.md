@@ -7,3 +7,4 @@
 ├──5. [rm_q](nvhead/Images/accept.3.png)  <br>
 ├──6. [append](nvhead/Images/accept.2.png)  <br>
 ├──7. [qsort](nvhead/Images/accept.2.png)  <br>
+├──8. [attribs](nvhead/Images/accept.4.png)  <br>
