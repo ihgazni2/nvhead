@@ -76,7 +76,8 @@ _class Head_
 -------------------------------------------------------------------------
 
 
-#SPECIFIC HEADERS (In Progressing...) 
+# SPECIFIC HEADERS (In Progressing...)  
+
 --------------------------------------------------------------------------
 ├──0. [www_authenticate](nvhead/Images/www_authenticate.0.png)  <br>
 ├──1. [authorization](nvhead/Images/authorization.0.png)  <br>
