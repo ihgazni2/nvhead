@@ -188,9 +188,9 @@ class TypeSubtypeQ():
         self.darr = type_subtype_q_sarr2darr(self.sarr)
         pobj(self.sarr)
     def rm_q(self,cond_func):
+        indexes = elel.cond_select_indexes_all(darr,cond_func = lambda ele:(ele['q']==None))
         idarr = elel.array_map(self.darr,type_subtype_q_floatize)
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
-        indexes = elel.cond_select_indexes_all(darr,cond_func = lambda ele:(ele['q']==None))
         for index in indexes:
             idarr[index]['q'] == None
         self.darr = idarr

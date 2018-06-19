@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
       name="nvhead",
-      version = "0.90",
+      version = "0.91",
       description="convinient APIs for http headers",
       author="dapeli",
       url="https://github.com/ihgazni2/nvhead",
