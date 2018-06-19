@@ -170,6 +170,7 @@ class TypeSubtypeQ():
         pobj(self.sarr)
     def modify(self,func,*func_args,**func_kwargs):
         self.sarr = func(self.sarr,*func_args,**func_kwargs)
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
         pobj(self.sarr)
     def rm_not_type(self,typename):
         self.sarr =type_subtype_q_cond_slct(self.sarr,'type',typename)
