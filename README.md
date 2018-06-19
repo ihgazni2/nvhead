@@ -105,7 +105,7 @@ _class Head_
 ├──23. [if_unmodified_since](nvhead/Images/if_unmodified_since.0.png)  <br>
 ├──24. [connection](nvhead/Images/connection.0.png)  <br>
 ├──25. [keep_alive](nvhead/Images/keep_alive.0.png)  <br>
-├──26. [accept](nvhead/Images/accept.0.png)  <br>
+├──26. [accept](nvhead/Images/ReadMeDetailed/accept.md)<br>
 ├──27. [accept_charset](nvhead/Images/accept_charset.0.png)  <br>
 ├──28. [accept_encoding](nvhead/Images/accept_encoding.0.png)  <br>
 ├──29. [accept_language](nvhead/Images/accept_language.0.png)  <br>
