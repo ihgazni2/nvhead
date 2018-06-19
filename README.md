@@ -59,7 +59,20 @@ _class Head_
 ├──5. [remove\<0\>](nvhead/Images/Head.remove.0.png)  <br>
 ├──5. [remove\<1\>](nvhead/Images/Head.remove.1.png)  <br>
 ├──6. [remove_all](nvhead/Images/Head.remove_all.0.png)  <br>
-
+├──7. [prepend\<0\>](nvhead/Images/Head.prepend.0.png)  <br>
+├──7. [prepend\<1\>](nvhead/Images/Head.prepend.1.png)  <br>
+├──8. [insert](nvhead/Images/Head.insert.0.png)  <br>
+├──9. [uniqualize](nvhead/Images/Head.uniqualize.0.png)  <br>
+├──10. [uniqualize_all](nvhead/Images/Head.uniqualize_all.0.png)  <br>
+├──11. [getitem\<0\>](nvhead/Images/Head.get.0.png)  <br>
+├──11. [getattr\<1\>](nvhead/Images/Head.get.1.png)  <br>
+├──12. [delitem\<0\>](nvhead/Images/Head.delitem.0.png)  <br>
+├──12. [delitem\<1\>](nvhead/Images/Head.delitem.1.png)  <br>
+├──13. [setitem\<0\>](nvhead/Images/Head.setitem.0.png)  <br>
+├──13. [setitem\<1\>](nvhead/Images/Head.setitem.1.png)  <br>
+├──14. [setattr\<0\>](nvhead/Images/Head.setattr.0.png)  <br>
+├──14. [setattr\<1\>](nvhead/Images/Head.setattr.1.png)  <br>
+├──15. [delattr](nvhead/Images/Head.delattr.0.png)  <br>
 -------------------------------------------------------------------------
 
 
