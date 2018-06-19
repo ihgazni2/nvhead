@@ -117,7 +117,7 @@ def head_update(self,tl):
             super(Head,self).__setattr__(method,values)
 
 
-def update_after_remove(self,name):
+def update_after_remove(self,tl,name):
     lngth = tltl._indexes_all(tl,key=name).__len__()
     if(lngth == 0):
         usname = self._orig2us_ref[name]
@@ -217,7 +217,7 @@ class Head():
             else:
                 pass
             tl = self._tlist.tl
-            update_after_remove(self,iname)
+            update_after_remove(self,tl,iname)
             head_update(self,tl)
     def __getitem__(self,*args,**kwargs):
         if(isinstance(args[0],tuple)):
@@ -282,7 +282,7 @@ class Head():
             key = str(key)
             tltl._pop_all(self._tlist.tl,key=key)
         tl = self._tlist.tl
-        update_after_remove(self,key)
+        update_after_remove(self,tl,key)
         head_update(self,tl)
     def append(self,name,value,**kwargs):
         if('force' in kwargs):
@@ -364,13 +364,13 @@ class Head():
         name = str(name)
         self._tlist.remove_which(which,key=name)
         tl = self._tlist.tl
-        update_after_remove(self,name)
+        update_after_remove(self,tl,name)
         head_update(self,tl)
     def remove_all(self,name,**kwargs):
         name = str(name)
         self._tlist.remove_all(key=name)
         tl = self._tlist.tl
-        update_after_remove(self,name)
+        update_after_remove(self,tl,name)
         head_update(self,tl)
     def uniqualize(self,name,**kwargs):
         name = str(name)
