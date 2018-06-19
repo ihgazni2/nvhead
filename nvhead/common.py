@@ -129,28 +129,22 @@ def type_subtype_q_cond_slct_not(sarr,key,match_value):
     sarr = type_subtype_q_darr2sarr(darr)
     return(sarr)
 
-
-def type_subtype_q_sort_by_q(darr):
-    darr1 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']==None))
-    darr2 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']!=None))
-    ndarr1 = elel.sortDictList(darr1,cond_keys=['q','type','subtype'],reverse=True)
-    def map_func(dele):
+def type_subtype_q_floatize(dele):
         if(dele['q'] == None):
             dele['q'] = 1.0
         else:
             dele['q'] = float(dele['q'])
         return(dele)
-    idarr2 = elel.array_map(darr2,map_func)
+
+def type_subtype_q_sort_by_q(darr):
+    darr1 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']==None))
+    darr2 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']!=None))
+    ndarr1 = elel.sortDictList(darr1,cond_keys=['q','type','subtype'],reverse=True)
+    idarr2 = elel.array_map(darr2,type_subtype_q_floatize)
     ndarr2 = elel.sortDictList(darr2,cond_keys=['q','type','subtype'],reverse=True)
     ndarr = elel.concat(ndarr1,ndarr2)
     return(ndarr)
 
-#slct_via_type
-#rm_via_type
-#slct_via_subtype
-#rm_via_subtype
-#slct_via_q  
-#rm_via_q 
 
 class TypeSubtypeQ():
     def __init__(self,one,**kwargs):
@@ -176,6 +170,34 @@ class TypeSubtypeQ():
         pobj(self.sarr)
     def modify(self,func,*func_args,**func_kwargs):
         self.sarr = func(self.sarr,*func_args,**func_kwargs)
+        pobj(self.sarr)
+    def rm_not_type(self,typename):
+        self.sarr =type_subtype_q_cond_slct(self.sarr,'type',typename)
+        self.darr = type_subtype_q_sarr2darr(self.sarr
+        pobj(self.sarr)
+    def rm_type(self,typename):
+        self.sarr =type_subtype_q_cond_slct_not(self.sarr,'type',typename)
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_not_subtype(self,subtypename):
+        self.sarr =type_subtype_q_cond_slct(self.sarr,'subtype',subtypename)
+        self.darr = type_subtype_q_sarr2darr(self.sarr
+        pobj(self.sarr)
+    def rm_subtype(self,subtypename):
+        self.sarr =type_subtype_q_cond_slct_not(self.sarr,'subtype',subtypename)
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_q(self,cond_func):
+        idarr = elel.array_map(self.darr,type_subtype_q_floatize)
+        idarr = elel.cond_select_values_all(idarr,cond_func)
+        indexes = elel.cond_select_indexes_all(darr,cond_func = lambda ele:(ele['q']==None))
+        for index in indexes:
+            idarr[index]['q'] == None
+        self.darr = idarr
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+
+
 
 ##########################
 
