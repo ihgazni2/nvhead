@@ -56,6 +56,9 @@ _class Head_
 ├──4. [append\<1\>](nvhead/Images/Head.append.1.png)  <br>
 ├──4. [append\<2\>](nvhead/Images/Head.append.2.png)  <br>
 ├──4. [append\<3\>](nvhead/Images/Head.append.3.png)  <br>
+├──5. [remove\<0\>](nvhead/Images/Head.remove.0.png)  <br>
+├──5. [remove\<1\>](nvhead/Images/Head.remove.1.png)  <br>
+├──6. [remove_all](nvhead/Images/Head.remove_all.0.png)  <br>
 
 -------------------------------------------------------------------------
 
