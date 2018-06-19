@@ -173,7 +173,7 @@ class TypeSubtypeQ():
         pobj(self.sarr)
     def rm_not_type(self,typename):
         self.sarr =type_subtype_q_cond_slct(self.sarr,'type',typename)
-        self.darr = type_subtype_q_sarr2darr(self.sarr
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
         pobj(self.sarr)
     def rm_type(self,typename):
         self.sarr =type_subtype_q_cond_slct_not(self.sarr,'type',typename)
@@ -181,7 +181,7 @@ class TypeSubtypeQ():
         pobj(self.sarr)
     def rm_not_subtype(self,subtypename):
         self.sarr =type_subtype_q_cond_slct(self.sarr,'subtype',subtypename)
-        self.darr = type_subtype_q_sarr2darr(self.sarr
+        self.darr = type_subtype_q_sarr2darr(self.sarr)
         pobj(self.sarr)
     def rm_subtype(self,subtypename):
         self.sarr =type_subtype_q_cond_slct_not(self.sarr,'subtype',subtypename)
