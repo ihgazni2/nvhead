@@ -194,7 +194,7 @@ class TypeSubtypeQ():
         for index in indexes:
             idarr[index]['q'] == None
         self.darr = idarr
-        self.darr = type_subtype_q_sarr2darr(self.sarr)
+        self.sarr = type_subtype_q_darr2sarr(self.darr)
         pobj(self.sarr)
     def append(self,*args):
         if(args.__len__()==1):
