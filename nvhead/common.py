@@ -199,15 +199,16 @@ class TypeSubtypeQ():
         pobj(self.sarr)
     def append(self,*args):
         if(args.__len__()==1):
-            if(is_darr(args[0])):
+            if(isinstance(args[0],dict)):
                 self.darr.append(args[0])
                 self.sarr = type_subtype_q_darr2sarr(args[0])
-            elif(is_sarr(args[0])):
+            elif("/" in args[0]):
                 self.sarr.append(args[0])
                 self.darr = type_subtype_q_sarr2darr(self.sarr)
             else:
-                self.sarr = type_subtype_q_s2sarr(args[0])
-                self.darr = type_subtype_q_sarr2darr(self.sarr)
+                print("invalid")
+                #self.sarr = type_subtype_q_s2sarr(args[0])
+                #self.darr = type_subtype_q_sarr2darr(self.sarr)
         elif(args.__len__()==2):
             self.darr.append({"type":args[0],"subtype":args[1],"q":None})
             self.sarr = type_subtype_q_darr2sarr(self.darr)
