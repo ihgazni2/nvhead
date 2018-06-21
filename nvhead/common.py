@@ -216,3 +216,138 @@ class TypeSubtypeQ():
             self.darr.append({"type":args[0],"subtype":args[1],"q":str(args[2])})
             self.sarr = type_subtype_q_darr2sarr(self.darr)
         pobj(self.sarr)
+
+
+
+##########################
+
+# s = '''Accept-Charset: gb2312;q=0.3, utf-8, iso-8859-1;q=0.5, *;q=0.1'''
+
+def type_q_fmt(s):
+    s = s.replace(";\x20",";")
+    s = s.replace("\x20;",";")
+    s = s.replace("\x20;\x20",";")
+    return(s)
+
+def type_q_s2sarr(s,**kwargs):
+    s = type_q_fmt(s)
+    name,body = one_s2t(s)
+    sarr = body.split(",\x20")
+    return(sarr)
+
+def type_q_ele_s2d(ele,**kwargs):
+    if(";q=" in ele):
+        arr2 = ele.split(";q=")
+        type = arr2[0]
+        q = arr2[1]
+    else:
+        type = ele
+        q = None
+    d = {
+        'type':type,
+        'q':q
+    }
+    return(d)
+
+def type_q_ele_d2s(d,**kwargs):
+    if(d["q"] == None):
+        s = d['type'] 
+    else:
+        s = d['type'] + ';q=' + str(d['q'])
+    return(s)
+
+def type_q_sarr2darr(sarr,**kwargs):
+    darr = elel.array_map(sarr,type_q_ele_s2d)
+    return(darr)
+
+def type_q_darr2sarr(darr,**kwargs):
+    sarr = elel.array_map(darr,type_q_ele_d2s)
+    return(sarr)
+
+def type_q_cond_slct(sarr,key,match_value):
+    darr = type_q_sarr2darr(sarr)
+    darr = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele[key]==match_value))
+    sarr = type_q_darr2sarr(darr)
+    return(sarr)
+
+def type_q_cond_slct_not(sarr,key,match_value):
+    darr = type_q_sarr2darr(sarr)
+    darr = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele[key]!=match_value))
+    sarr = type_q_darr2sarr(darr)
+    return(sarr)
+
+def type_q_floatize(dele):
+        if(dele['q'] == None):
+            dele['q'] = 1.0
+        else:
+            dele['q'] = float(dele['q'])
+        return(dele)
+
+def type_q_sort_by_q(darr):
+    darr1 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']==None))
+    darr2 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']!=None))
+    ndarr1 = elel.sortDictList(darr1,cond_keys=['q','type'],reverse=True)
+    idarr2 = elel.array_map(darr2,type_q_floatize)
+    ndarr2 = elel.sortDictList(darr2,cond_keys=['q','type'],reverse=True)
+    ndarr = elel.concat(ndarr1,ndarr2)
+    return(ndarr)
+
+
+class TypeQ():
+    def __init__(self,one,**kwargs):
+        if(isinstance(one,str)):
+            self.sarr = type_q_s2sarr(one)
+            self.darr = type_q_sarr2darr(self.sarr)
+        elif(is_sarr(one)):
+            self.sarr = one
+            self.darr = type_q_sarr2darr(self.sarr)
+        else:
+            self.sarr = type_q_darr2sarr(one)
+            self.darr = one
+    def __repr__(self):
+        pobj(self.sarr)
+        return("")
+    def str(self):
+        s = elel.join(self.sarr,",\x20")
+        print(s)
+        return(s)
+    def qsort(self):
+        self.darr = type_q_sort_by_q(self.darr)
+        self.sarr = type_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+    def modify(self,func,*func_args,**func_kwargs):
+        self.sarr = func(self.sarr,*func_args,**func_kwargs)
+        self.darr = type_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_not_type(self,typename):
+        self.sarr =type_q_cond_slct(self.sarr,'type',typename)
+        self.darr = type_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_type(self,typename):
+        self.sarr =type_q_cond_slct_not(self.sarr,'type',typename)
+        self.darr = type_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_q(self,cond_func):
+        indexes = elel.cond_select_indexes_all(self.darr,cond_func = lambda ele:(ele['q']==None))
+        idarr = elel.array_map(self.darr,type_q_floatize)
+        idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
+        for index in indexes:
+            idarr[index]['q'] == None
+        self.darr = idarr
+        self.sarr = type_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+    def append(self,*args):
+        if(args.__len__()==1):
+            if(isinstance(args[0],dict)):
+                self.darr.append(args[0])
+                self.sarr = type_q_darr2sarr(args[0])
+            else:
+                self.darr.append({"type":args[0],"q":None})
+                self.sarr = type_q_darr2sarr(self.darr)
+        else:
+            self.darr.append({"type":args[0],"q":str(args[1])})
+            self.sarr = type_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+
+
+

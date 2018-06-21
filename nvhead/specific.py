@@ -8,3 +8,13 @@ class Accept(TypeSubtypeQ):
         self.header_type = "req"
         self.forbidden_header_name = False
         self.cros_safelisted_request_header = True
+
+
+class AcceptCharset(TypeQ):
+    def __init__(self,one,**kwargs):
+        super(AcceptCharset,self).__init__(one,**kwargs)
+        self.header_type = "req"
+        self.forbidden_header_name = False
+
+
+
