@@ -194,7 +194,7 @@ class TypeSubtypeQ():
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
         for index in indexes:
             curr_index = orig_indexes.index(index)
-            idarr[curr_index]['q'] == None
+            idarr[curr_index]['q'] = None
         self.darr = idarr
         self.sarr = type_subtype_q_darr2sarr(self.darr)
         pobj(self.sarr)
@@ -333,7 +333,7 @@ class TypeQ():
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
         for index in indexes:
             curr_index = orig_indexes.index(index)
-            idarr[curr_index]['q'] == None
+            idarr[curr_index]['q'] = None
         self.darr = idarr
         self.sarr = type_q_darr2sarr(self.darr)
         pobj(self.sarr)
@@ -478,7 +478,7 @@ class LanguageLocaleQ():
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
         for index in indexes:
             curr_index = orig_indexes.index(index)
-            idarr[curr_index]['q'] == None
+            idarr[curr_index]['q'] = None
         self.darr = idarr
         self.sarr = language_locale_q_darr2sarr(self.darr)
         pobj(self.sarr)
