@@ -144,7 +144,6 @@ def type_subtype_q_sort_by_q(darr):
     ndarr = elel.concat(ndarr1,ndarr2)
     return(ndarr)
 
-
 class TypeSubtypeQ():
     def __init__(self,one,**kwargs):
         if(isinstance(one,str)):
@@ -351,7 +350,7 @@ class TypeQ():
         pobj(self.sarr)
 
 
-#######################
+##########@@@@@#############
 #s = '''en;q=0.8, de;q=0.7, *;q=0.5, fr-CH, fr;q=0.9, sr-Lat'''
 
 
@@ -368,16 +367,27 @@ def language_locale_q_s2sarr(s,**kwargs):
     return(sarr)
 
 def language_locale_q_ele_s2d(ele,sp='-',**kwargs):
-    arr = ele.split(sp)
-    language = arr[0]
-    tmp = arr[1]
-    if(";q=" in tmp):
-        arr2 = tmp.split(";q=")
-        locale = arr2[0]
-        q = arr2[1]
+    if(sp in ele):
+        arr = ele.split(sp)
+        language = arr[0]
+        tmp = arr[1]
+        if(";q=" in tmp):
+            arr2 = tmp.split(";q=")
+            locale = arr2[0]
+            q = arr2[1]
+        else:
+            locale = tmp
+            q = None
     else:
-        locale = tmp
-        q = None
+        if(";q=" in ele):
+            arr2 = ele.split(";q=")
+            language = arr2[0]
+            locale = None
+            q = arr2[1]
+        else:
+            language = ele
+            locale = None
+            q = None
     d = {
         'language':language,
         'locale':locale,
@@ -386,8 +396,12 @@ def language_locale_q_ele_s2d(ele,sp='-',**kwargs):
     return(d)
 
 def language_locale_q_ele_d2s(d,sp='-',**kwargs):
-    if(d["q"] == None):
+    if((d["q"] == None) & (d["locale"] == None)):
+        s = d['language']
+    elif((d["q"] == None) & (d["locale"] != None)):
         s = d['language'] + sp + d['locale']
+    elif((d["q"] != None) & (d["locale"] == None)):
+        s = d['language'] + ';q=' + str(d['q'])
     else:
         s = d['language'] + sp + d['locale'] + ';q=' + str(d['q'])
     return(s)
@@ -493,7 +507,10 @@ class LanguageLocaleQ():
             else:
                 print("invalid")
         elif(args.__len__()==2):
-            self.darr.append({"language":args[0],"locale":args[1],"q":None})
+            if(isinstance(args[1],str)):
+                self.darr.append({"language":args[0],"locale":args[1],"q":None})
+            else:
+                self.darr.append({"language":args[0],"locale":None,"q":args[1]})
             self.sarr = language_locale_q_darr2sarr(self.darr)
         elif(args.__len__()==3):
             self.darr.append({"language":args[0],"locale":args[1],"q":str(args[2])})
@@ -504,4 +521,4 @@ class LanguageLocaleQ():
 
 
 
-#################################
+
