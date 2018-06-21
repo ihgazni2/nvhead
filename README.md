@@ -107,8 +107,8 @@ _class Head_
 ├──25. [keep_alive](nvhead/Images/keep_alive.0.png)  <br>
 ├──26. [accept](nvhead/ReadMeDetailed/accept.md)<br>
 ├──27. [accept_charset](nvhead/ReadMeDetailed/accept_charset.md)  <br>
-├──28. [accept_encoding](nvhead/Images/accept_encoding.0.png)  <br>
-├──29. [accept_language](nvhead/Images/accept_language.0.png)  <br>
+├──28. [accept_encoding](nvhead/ReadMeDetailed/accept_encoding.md)  <br>
+├──29. [accept_language](nvhead/ReadMeDetailed/accept_language.md)  <br>
 ├──30. [expect](nvhead/Images/expect.0.png)  <br>
 ├──31. [max_forwards](nvhead/Images/max_forwards.0.png)  <br>
 ├──32. [cookie](nvhead/Images/cookie.0.png)  <br>
