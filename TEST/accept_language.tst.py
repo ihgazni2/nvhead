@@ -11,3 +11,14 @@ accept_language.qsort()
 accept_language.rm_locale("CH")
 accept_language.rm_language("*")
 accept_language.rm_q(lambda ele:ele['q']>=0.8)
+
+
+
+accept_language
+accept_language.append('de',0.7)
+accept_language.append('*')
+accept_language.append('zh','TW')
+accept_language.append('zh','CH',0.2)
+
+
+

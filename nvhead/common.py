@@ -1,4 +1,4 @@
-import elist.elist as elel
+mport elist.elist as elel
 import tlist.tlist as tltl
 import edict.edict as eded
 import estring.estring as eses
@@ -510,7 +510,7 @@ class LanguageLocaleQ():
             if(isinstance(args[1],str)):
                 self.darr.append({"language":args[0],"locale":args[1],"q":None})
             else:
-                self.darr.append({"language":args[0],"locale":None,"q":args[1]})
+                self.darr.append({"language":args[0],"locale":None,"q":str(args[1])})
             self.sarr = language_locale_q_darr2sarr(self.darr)
         elif(args.__len__()==3):
             self.darr.append({"language":args[0],"locale":args[1],"q":str(args[2])})
