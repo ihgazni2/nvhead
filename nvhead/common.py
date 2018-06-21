@@ -83,8 +83,8 @@ def type_subtype_q_s2sarr(s,**kwargs):
     sarr = body.split(",\x20")
     return(sarr)
 
-def type_subtype_q_ele_s2d(ele,**kwargs):
-    arr = ele.split("/")
+def type_subtype_q_ele_s2d(ele,sp='/',**kwargs):
+    arr = ele.split(sp)
     type = arr[0]
     tmp = arr[1]
     if(";q=" in tmp):
@@ -101,22 +101,21 @@ def type_subtype_q_ele_s2d(ele,**kwargs):
     }
     return(d)
 
-def type_subtype_q_ele_d2s(d,**kwargs):
+def type_subtype_q_ele_d2s(d,sp='/',**kwargs):
     if(d["q"] == None):
-        s = d['type'] + '/' + d['subtype']
+        s = d['type'] + sp + d['subtype']
     else:
-        s = d['type'] + '/' + d['subtype'] + ';q=' + str(d['q'])
+        s = d['type'] + sp + d['subtype'] + ';q=' + str(d['q'])
     return(s)
 
-def type_subtype_q_sarr2darr(sarr,**kwargs):
-    darr = elel.array_map(sarr,type_subtype_q_ele_s2d)
+def type_subtype_q_sarr2darr(sarr,sp='/',**kwargs):
+    darr = elel.array_map(sarr,type_subtype_q_ele_s2d,sp)
     return(darr)
 
-def type_subtype_q_darr2sarr(darr,**kwargs):
-    sarr = elel.array_map(darr,type_subtype_q_ele_d2s)
+def type_subtype_q_darr2sarr(darr,sp='/',**kwargs):
+    sarr = elel.array_map(darr,type_subtype_q_ele_d2s,sp)
     return(sarr)
 
-###########################
 def type_subtype_q_cond_slct(sarr,key,match_value):
     darr = type_subtype_q_sarr2darr(sarr)
     darr = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele[key]==match_value))
@@ -189,11 +188,13 @@ class TypeSubtypeQ():
         self.darr = type_subtype_q_sarr2darr(self.sarr)
         pobj(self.sarr)
     def rm_q(self,cond_func):
-        indexes = elel.cond_select_indexes_all(darr,cond_func = lambda ele:(ele['q']==None))
+        indexes = elel.cond_select_indexes_all(self.darr,cond_func = lambda ele:(ele['q']==None))
         idarr = elel.array_map(self.darr,type_subtype_q_floatize)
+        orig_indexes = elel.cond_select_indexes_all(idarr,cond_func=cond_func)
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
         for index in indexes:
-            idarr[index]['q'] == None
+            curr_index = orig_indexes.index(index)
+            idarr[curr_index]['q'] == None
         self.darr = idarr
         self.sarr = type_subtype_q_darr2sarr(self.darr)
         pobj(self.sarr)
@@ -202,13 +203,13 @@ class TypeSubtypeQ():
             if(isinstance(args[0],dict)):
                 self.darr.append(args[0])
                 self.sarr = type_subtype_q_darr2sarr(args[0])
-            elif("/" in args[0]):
+            elif( "/" in args[0]):
                 self.sarr.append(args[0])
                 self.darr = type_subtype_q_sarr2darr(self.sarr)
             else:
                 print("invalid")
-                #self.sarr = type_subtype_q_s2sarr(args[0])
-                #self.darr = type_subtype_q_sarr2darr(self.sarr)
+                # self.sarr = type_subtype_q_s2sarr(args[0])
+                # self.darr = type_subtype_q_sarr2darr(self.sarr)
         elif(args.__len__()==2):
             self.darr.append({"type":args[0],"subtype":args[1],"q":None})
             self.sarr = type_subtype_q_darr2sarr(self.darr)
@@ -216,8 +217,6 @@ class TypeSubtypeQ():
             self.darr.append({"type":args[0],"subtype":args[1],"q":str(args[2])})
             self.sarr = type_subtype_q_darr2sarr(self.darr)
         pobj(self.sarr)
-
-
 
 ##########################
 
@@ -330,9 +329,11 @@ class TypeQ():
     def rm_q(self,cond_func):
         indexes = elel.cond_select_indexes_all(self.darr,cond_func = lambda ele:(ele['q']==None))
         idarr = elel.array_map(self.darr,type_q_floatize)
+        orig_indexes = elel.cond_select_indexes_all(idarr,cond_func=cond_func)
         idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
         for index in indexes:
-            idarr[index]['q'] == None
+            curr_index = orig_indexes.index(index)
+            idarr[curr_index]['q'] == None
         self.darr = idarr
         self.sarr = type_q_darr2sarr(self.darr)
         pobj(self.sarr)
@@ -350,4 +351,157 @@ class TypeQ():
         pobj(self.sarr)
 
 
+#######################
+#s = '''en;q=0.8, de;q=0.7, *;q=0.5, fr-CH, fr;q=0.9, sr-Lat'''
 
+
+def language_locale_q_fmt(s):
+    s = s.replace(";\x20",";")
+    s = s.replace("\x20;",";")
+    s = s.replace("\x20;\x20",";")
+    return(s)
+
+def language_locale_q_s2sarr(s,**kwargs):
+    s = language_locale_q_fmt(s)
+    name,body = one_s2t(s)
+    sarr = body.split(",\x20")
+    return(sarr)
+
+def language_locale_q_ele_s2d(ele,sp='-',**kwargs):
+    arr = ele.split(sp)
+    language = arr[0]
+    tmp = arr[1]
+    if(";q=" in tmp):
+        arr2 = tmp.split(";q=")
+        locale = arr2[0]
+        q = arr2[1]
+    else:
+        locale = tmp
+        q = None
+    d = {
+        'language':language,
+        'locale':locale,
+        'q':q
+    }
+    return(d)
+
+def language_locale_q_ele_d2s(d,sp='-',**kwargs):
+    if(d["q"] == None):
+        s = d['language'] + sp + d['locale']
+    else:
+        s = d['language'] + sp + d['locale'] + ';q=' + str(d['q'])
+    return(s)
+
+def language_locale_q_sarr2darr(sarr,sp='-',**kwargs):
+    darr = elel.array_map(sarr,language_locale_q_ele_s2d,sp)
+    return(darr)
+
+def language_locale_q_darr2sarr(darr,sp='-',**kwargs):
+    sarr = elel.array_map(darr,language_locale_q_ele_d2s,sp)
+    return(sarr)
+
+def language_locale_q_cond_slct(sarr,key,match_value):
+    darr = language_locale_q_sarr2darr(sarr)
+    darr = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele[key]==match_value))
+    sarr = language_locale_q_darr2sarr(darr)
+    return(sarr)
+
+def language_locale_q_cond_slct_not(sarr,key,match_value):
+    darr = language_locale_q_sarr2darr(sarr)
+    darr = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele[key]!=match_value))
+    sarr = language_locale_q_darr2sarr(darr)
+    return(sarr)
+
+def language_locale_q_floatize(dele):
+        if(dele['q'] == None):
+            dele['q'] = 1.0
+        else:
+            dele['q'] = float(dele['q'])
+        return(dele)
+
+def language_locale_q_sort_by_q(darr):
+    darr1 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']==None))
+    darr2 = elel.cond_select_values_all(darr,cond_func = lambda ele:(ele['q']!=None))
+    ndarr1 = elel.sortDictList(darr1,cond_keys=['q','language','locale'],reverse=True)
+    idarr2 = elel.array_map(darr2,language_locale_q_floatize)
+    ndarr2 = elel.sortDictList(darr2,cond_keys=['q','language','locale'],reverse=True)
+    ndarr = elel.concat(ndarr1,ndarr2)
+    return(ndarr)
+
+
+class LanguageLocaleQ():
+    def __init__(self,one,**kwargs):
+        if(isinstance(one,str)):
+            self.sarr = language_locale_q_s2sarr(one)
+            self.darr = language_locale_q_sarr2darr(self.sarr)
+        elif(is_sarr(one)):
+            self.sarr = one
+            self.darr = language_locale_q_sarr2darr(self.sarr)
+        else:
+            self.sarr = language_locale_q_darr2sarr(one)
+            self.darr = one
+    def __repr__(self):
+        pobj(self.sarr)
+        return("")
+    def str(self):
+        s = elel.join(self.sarr,",\x20")
+        print(s)
+        return(s)
+    def qsort(self):
+        self.darr = language_locale_q_sort_by_q(self.darr)
+        self.sarr = language_locale_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+    def modify(self,func,*func_args,**func_kwargs):
+        self.sarr = func(self.sarr,*func_args,**func_kwargs)
+        self.darr = language_locale_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_not_language(self,languagename):
+        self.sarr =language_locale_q_cond_slct(self.sarr,'language',languagename)
+        self.darr = language_locale_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_language(self,languagename):
+        self.sarr =language_locale_q_cond_slct_not(self.sarr,'language',languagename)
+        self.darr = language_locale_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_not_locale(self,localename):
+        self.sarr =language_locale_q_cond_slct(self.sarr,'locale',localename)
+        self.darr = language_locale_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_locale(self,localename):
+        self.sarr =language_locale_q_cond_slct_not(self.sarr,'locale',localename)
+        self.darr = language_locale_q_sarr2darr(self.sarr)
+        pobj(self.sarr)
+    def rm_q(self,cond_func):
+        indexes = elel.cond_select_indexes_all(self.darr,cond_func = lambda ele:(ele['q']==None))
+        idarr = elel.array_map(self.darr,language_locale_q_floatize)
+        orig_indexes = elel.cond_select_indexes_all(idarr,cond_func=cond_func)
+        idarr = elel.cond_select_values_all(idarr,cond_func=cond_func)
+        for index in indexes:
+            curr_index = orig_indexes.index(index)
+            idarr[curr_index]['q'] == None
+        self.darr = idarr
+        self.sarr = language_locale_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+    def append(self,*args):
+        if(args.__len__()==1):
+            if(isinstance(args[0],dict)):
+                self.darr.append(args[0])
+                self.sarr = language_locale_q_darr2sarr(args[0])
+            elif( '-' in args[0]):
+                self.sarr.append(args[0])
+                self.darr = language_locale_q_sarr2darr(self.sarr)
+            else:
+                print("invalid")
+        elif(args.__len__()==2):
+            self.darr.append({"language":args[0],"locale":args[1],"q":None})
+            self.sarr = language_locale_q_darr2sarr(self.darr)
+        elif(args.__len__()==3):
+            self.darr.append({"language":args[0],"locale":args[1],"q":str(args[2])})
+            self.sarr = language_locale_q_darr2sarr(self.darr)
+        pobj(self.sarr)
+
+
+
+
+
+#################################
