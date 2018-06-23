@@ -519,6 +519,34 @@ class LanguageLocaleQ():
 
 
 
+######
 
+def comma_fmt(s):
+    s = s.replace(";\x20",";")
+    s = s.replace("\x20;",";")
+    s = s.replace("\x20;\x20",";")
+    return(s)
+
+def comma_s2sarr(s,**kwargs):
+    s = type_q_fmt(s)
+    name,body = one_s2t(s)
+    sarr = body.split(",\x20")
+    return(sarr)
+
+
+class Comma():
+    def __init__(self,one,**kwargs):
+        if(isinstance(one,list)):
+            self.sarr = one
+            self.str = elel.join(self.sarr,",\x20")
+        else:
+            self.str = comma_fmt(one)
+            self.sarr = comma_s2sarr(self.str)
+    def __repr__(self):
+        pobj(self.sarr)
+        return("")
+
+
+#####
 
 

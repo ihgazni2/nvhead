@@ -47,3 +47,76 @@ class AcceptLanguage(LanguageLocaleQ):
 
 
 ######
+
+class AcceptRange():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "res"
+        self.forbidden_header_name = False
+    def directives(self):
+        pobj(["none","bytes"])
+
+class AccessControlAllowCredentials():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "res"
+        self.forbidden_header_name = False
+
+class AccessControlAllowOrigin():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "res"
+        self.forbidden_header_name = False
+
+class AccessControlMaxAge():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "res"
+        self.forbidden_header_name = False
+
+
+class AccessControlAllowHeaders(Comma):
+    def __init__(self,one,**kwargs):
+        super(AccessControlAllowHeaders,self).__init__(one,**kwargs)
+        self.header_type = "res"
+        self.forbidden_header_name = False
+
+
+class AccessControlAllowMethods(Comma):
+    def __init__(self,one,**kwargs):
+        super(AccessControlAllowMethods,self).__init__(one,**kwargs)
+        self.header_type = "res"
+        self.forbidden_header_name = False
+    def directives(self):
+        pobj(["GET","HEAD","POST","PUT","DELETE","CONNECT","OPTIONS","TRACE","PATCH"])
+
+class AccessControlExposeHeaders(Comma):
+    def __init__(self,one,**kwargs):
+        super(AccessControlExposeHeaders,self).__init__(one,**kwargs)
+        self.header_type = "res"
+        self.forbidden_header_name = False
+    def directives(self):
+        print("by default the below six are exposed")
+        pobj(["Cache-Control","Content-Language","Content-Type","Expires","Last-Modified","Pragma"])
+
+
+class AccessControlRequestHeaders(Comma):
+    def __init__(self,one,**kwargs):
+        super(AccessControlRequestHeaders,self).__init__(one,**kwargs)
+        self.header_type = "req"
+        self.forbidden_header_name = True
+
+
+class AccessControlRequestMethod():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "req"
+        self.forbidden_header_name = True
+    def directives(self):
+        print("one of the below http method")
+        pobj(["GET","HEAD","POST","PUT","DELETE","CONNECT","OPTIONS","TRACE","PATCH"])
+
+
+######################
+
+
