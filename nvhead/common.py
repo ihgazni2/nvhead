@@ -1,4 +1,4 @@
-mport elist.elist as elel
+import elist.elist as elel
 import tlist.tlist as tltl
 import edict.edict as eded
 import estring.estring as eses
