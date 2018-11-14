@@ -521,10 +521,17 @@ class LanguageLocaleQ():
 
 ######
 
+#def old_comma_fmt(s):
+#    s = s.replace(";\x20",";")
+#    s = s.replace("\x20;",";")
+#    s = s.replace("\x20;\x20",";")
+#    return(s)
+
+
 def comma_fmt(s):
-    s = s.replace(";\x20",";")
-    s = s.replace("\x20;",";")
-    s = s.replace("\x20;\x20",";")
+    s = s.replace(",\x20",",")
+    s = s.replace("\x20,",",")
+    s = s.replace("\x20,\x20",",")
     return(s)
 
 def comma_s2sarr(s,**kwargs):
