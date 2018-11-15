@@ -8,6 +8,21 @@ from xdict.jprint import pdir
 from nvhead.consts import *
 
 #################
+def abstract_fmt(s,c='-'):
+    s = s.replace(c+"\x20",c)
+    s = s.replace("\x20"+c,c)
+    s = s.replace("\x20"+c+"\x20",c)
+    return(s)
+
+def try_int(s):
+    try:
+        rslt = int(s)
+    except:
+        return(s)
+    else:
+        return(rslt)
+#################
+
 def is_sarr(one):
     if(isinstance(one,list)):
         if(one.__len__()==0):
@@ -555,5 +570,29 @@ class Comma():
 
 
 #####
+
+def semicolon_fmt(s):
+    s = s.replace(";\x20",";")
+    s = s.replace("\x20;",";")
+    s = s.replace("\x20;\x20",";")
+    return(s)
+
+def semicolon_s2sarr(s,**kwargs):
+    s = type_q_fmt(s)
+    name,body = one_s2t(s)
+    sarr = body.split(";\x20")
+    return(sarr)
+
+class SemiColon():
+    def __init__(self,one,**kwargs):
+        if(isinstance(one,list)):
+            self.sarr = one
+            self.str = elel.join(self.sarr,";\x20")
+        else:
+            self.str = semicolon_fmt(one)
+            self.sarr = semicolon_s2sarr(self.str)
+    def __repr__(self):
+        pobj(self.sarr)
+        return("")
 
 

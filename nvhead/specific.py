@@ -1,6 +1,8 @@
 from nvhead.consts import *
 from nvhead.common import *
-
+from xdict.jprint import pobj
+import estring.estring as eses
+import re
 
 class Accept(TypeSubtypeQ):
     def __init__(self,one,**kwargs):
@@ -139,6 +141,9 @@ class Allow(Comma):
 
 #  Alt-Svc: h2=":443"; ma=3600
 
+class AltSvc(SemiColon):
+    def __init__(self,one,**kwargs):
+        super(AltSvc,self).__init__(one,**kwargs)
 
 
 class Authorization():
@@ -191,4 +196,123 @@ class ClearSiteData(Comma):
         self.forbidden_header_name = False
     def directives(self):
         pobj(["cache","cookies","storage","executionContexts","*"])
-#@@@@@@@@@@@@@@@@@@@@
+
+
+#
+
+class Connection():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "general"
+        self.forbidden_header_name = True
+    @classmethod
+    def is_close(cls,s):
+        cond = (s.lower() == 'close')
+        return(cond)
+    @classmethod
+    def is_keepalive(cls,s):
+        cond = (s.lower() == 'keepalive')
+        return(cond)
+
+#
+
+#https://aiohttp.readthedocs.io/en/stable/multipart.html
+
+class ContentDisposition(SemiColon):
+    def __init__(self,one,body_part,**kwargs):
+        super(ContentDisposition,self).__init__(one,**kwargs)
+        self.body_part = body_part
+        if(self.body_part == "main"):
+            self.header_type = "res"
+        elif(self.body_part == "subpart"):
+            self.header_type = "general"
+        self.forbidden_header_name = False
+        self.types = {'main':["inline","attachment"],"subpart":["form-data"]}
+
+
+class ContentEncoding(Comma):
+    def __init__(self,one,**kwargs):
+        super(ContentEncoding,self).__init__(one,**kwargs)
+        self.header_type = "entity"
+        self.forbidden_header_name = False
+    def directives(self):
+        pobj(["gzip","compress","deflate","identity","br"])
+
+
+class ContentLanguage(Comma):
+    def __init__(self,one,**kwargs):
+        super(ContentLanguage,self).__init__(one,**kwargs)
+        self.header_type = "entity"
+        self.forbidden_header_name = False
+        self.cros_safelisted_request_header = True
+        self.cros_safelisted_res_header = True
+    def directives(self):
+        pobj(["gzip","compress","deflate","identity","br"])
+
+class ContentLength():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "entity"
+        self.forbidden_header_name = True
+    def directives(self):
+        print("The length in decimal number of octets")
+
+
+class ContentLocation():
+    def __init__(self,one,**kwargs):
+        self.str = one
+        self.header_type = "entity"
+        self.forbidden_header_name = False
+    def directives(self):
+        print("A relative (to the request URL) or absolute URL")
+
+class ContentRange():
+    def __init__(self,one,**kwargs):
+        self.str = self.fmt(one)
+        self.header_type = "entity"
+        self.forbidden_header_name = False
+        self.unit,self.start,self.end,self.size = self.decode(self.str,mode='tuple')
+    def fmt(self,one):
+        one = eses.replace(one,re.compile('[\x20]+'),"\x20")
+        one = abstract_fmt(one,c='-')
+        return(one)
+    @classmethod
+    def asterisk(cls,s):
+        if(s == None):
+            return("*")
+        else:
+            return(s)
+    @classmethod
+    def decode(cls,one,**kwargs):
+        if('mode' in kwargs):
+            mode = kwargs['mode']
+        else:
+            mode = 'dict'
+        unit,others = one.split("\x20")
+        ranges,size = others.split("/")
+        start,end = ranges.split("-")
+        if(mode == "tuple"):
+            rslt = (try_int(unit),try_int(start),try_int(end),try_int(size))
+        else:
+            rslt = {"unit":try_int(unit),"start":try_int(start),"end":try_int(end),"size":try_int(size)}
+        return(rslt)
+    @classmethod
+    def encode(cls,d):
+        cond = isinstance(d,dict)
+        if(cond):
+            unit = asterisk(d['unit'])
+            start = asterisk(d['start'])
+            end = asterisk(d['end'])
+            size = asterisk(d['size'])
+        else:
+            unit,start,end,size = d
+        unit = try_int(unit)
+        start = try_int(start)
+        end = try_int(end)
+        size = try_int(size)
+        one = unit + "\x20" + start+"-"+ end + '/' + size
+        return(one)
+
+#######
+
+
