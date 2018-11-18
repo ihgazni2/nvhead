@@ -315,4 +315,103 @@ class ContentRange():
 
 #######
 
+class ContentSecurityPolicy(SemiColon):
+    def __init__(self,one,body_part,**kwargs):
+        super(ContentSecurityPolicy,self).__init__(one,**kwargs)
+        self.header_type = "res"
+        self.forbidden_header_name = "EVE PROTECTION"
+        self.fetch_directives = ['child-src ', 'connect-src', 'default-src', 'font-src', 'frame-src', 'img-src', 'manifest-src', 'media-src', 'object-src', 'prefetch-src', 'script-src', 'style-src', 'webrtc-src ', 'worker-src']
+        self.doc_directives = ['base-uri','plugin-types','sandbox','disown-opener']
+        self.nav_directives = ['form-action','frame-acncestors','navigate-to']
+        self.report_directives = ['report-uri','report-to']
+        self.other_directives = ['block-all-mixed-content','referrer','require-sri-for','upgrade-insecure-requests']
+    def directives(self,cond):
+        if(cond == 'fetch'):
+            pobj(self.fetch_directives)
+        elif(cond == 'doc'):
+            pobj(self.doc_directives)
+        elif(cond == 'nav'):
+            pobj(self.nav_directives)
+        elif(cond == 'report'):
+            pobj(self.report_directives)
+        elif(cond == 'other'):
+            pobj(self.other_directives)
+        else:
+            pass
+
+
+class ContentSecurityPolicyReportOnly(SemiColon):
+    def __init__(self,one,body_part,**kwargs):
+        super(ContentSecurityPolicyReportOnly,self).__init__(one,**kwargs)
+        self.header_type = "res"
+        self.forbidden_header_name = False
+        self.violation_directives = ['blocked-uri', 'disposition', 'document-uri', 'original-policy', 'referrer', 'script-sample', 'status-code', 'violated-directive']
+    def directives(self,cond):
+        pobj(self.violation_directives)
+
+
+class ContentType():
+    def __init__(self,one,**kwargs):
+        self.header_type = "entity"
+        self.forbidden_header_name = False
+        self.cors_safelisted_response_header = True
+        one = eses.replace(one,re.compile('[\x20]+'),"\x20")
+        one = one.replace('; ',';')
+        one = eses.replace(one,re.compile(' *= *'),'=')
+        self.str = one
+        arr = one.split(';')
+        self.mime = arr[0]
+        arr = arr[1].split('=')
+        super(ContentType,self).__setattr__(arr[0],arr[1])
+
+
+class Cookie(SemiColon):
+    def __init__(self,one,body_part,**kwargs):
+        super(Cookie,self).__init__(one,**kwargs)
+        self.header_type = "req"
+        self.forbidden_header_name = True
+
+
+class DNT():
+    def __init__(self,one,**kwargs):
+        self.header_type = "req"
+        self.forbidden_header_name = True
+        self.str = one
+    def directives(self):
+        pobj({
+                 0:'The user prefers to allow tracking on the target site',
+                 1:'The user prefers not to be tracked on the target site'
+             })
+
+class Date():
+    def __init__(self,one,**kwargs):
+        self.header_type = "general"
+        self.forbidden_header_name = True
+        one = eses.replace(one,re.compile('[\x20]+'),"\x20")
+        one = eses.replace(one,re.compile(' *, *'),',')
+        self.str = one
+        arr = one.split(',')
+        self.day_name = arr[0]
+        arr = arr[1].split("\x20")
+        self.day = arr[0]
+        self.month = arr[1]
+        self.year = arr[2]
+        self.GMT = arr[4]
+        arr = arr[3].split(":")
+        self.hour = arr[0]
+        self.minute = arr[1]
+        self.second = arr[2]
+
+
+class Etag():
+    def __init__(self,one,**kwargs):
+        self.header_type = "res"
+        self.forbidden_header_name = Forse
+        self.str = one
+        if(one[0:2]=="W/"):
+            self.etag = one[0:2].replace('"','')
+            self.weak = True
+        else:
+            self.etag = one.replace('"','')
+            self.weak = False
 
